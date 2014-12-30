@@ -1,0 +1,8 @@
+{
+    "name": "wakeup-call",
+    "version": "0.1.0",
+    "description": "Text-based application to help you wake your friends up",
+    "dependencies": {
+        "bootstrap": "~3"
+    }
+}
