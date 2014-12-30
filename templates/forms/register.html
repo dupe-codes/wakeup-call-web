@@ -1,0 +1,18 @@
+{% extends 'layouts/form.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <form action="/register" method="post" class="form">
+    <h3 class="form-heading">Register <a href="{{ url_for('home') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
+    {{ form.Username(class_='form-control first-input', placeholder=form.Username.label.text, required=true, autofocus=true) }}
+    <br/>
+    {{ form.Firstname(class_='form-control', placeholder=form.Firstname.label.text, required=true) }}
+    <br/>
+    {{ form.Lastname(class_='form-control', placeholder=form.Lastname.label.text) }}
+    <br/>
+    {{ form.Password(class_='form-control last-input', placeholder=form.Password.label.text, required=true) }}
+    <p class="pull-left"><a href="{{ url_for('login') }}">Login</a></p>
+    <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block">
+  </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!doctype html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Wakeup Call{% endblock %}</title>
+
+    {% block header_content %}{% endblock %}
+  </head>
+  <body class="form-page">
+    <div id="body-content" class="container">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-warning fda in">
+              <a class="close" data-dismiss="alert">&times;</a>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+
+</html>
