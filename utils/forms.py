@@ -11,6 +11,9 @@ class RegisterForm(Form):
     Username = TextField(
         'Username', validators=[DataRequired()]
     )
+    Phonenumber = TextField(
+        'Phonenumber', validators=[DataRequired()]
+    )
     Firstname = TextField(
         'Firstname', validators=[DataRequired()]
     )
