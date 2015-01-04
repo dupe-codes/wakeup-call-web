@@ -75,5 +75,12 @@ def logout():
     response.set_cookie('wakeup-session', '', expires=0)
     return response
 
+@app.route('/users/home', methods=['GET'])
+@login_required
+def userPage():
+    user_info = api.get_user_info(request)
+    groups = api.get_user_groups(user_info)
+    return render_template('users/home.html', user=user_info, groups=groups)
+
 if __name__ == '__main__':
     app.run(debug=True)

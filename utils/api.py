@@ -60,3 +60,11 @@ def verify_cookie(user_cookie):
     cookie = {'wakeup-session': user_cookie}
     response = requests.get(settings.BACKEND_URL + '/users/sessioncheck', cookies=cookie)
     return True if response.status_code == 200 else False
+
+def get_user_info(request):
+    """ Returns info for the currently logged in user """
+    return {'name': 'Bob'}
+
+def get_user_groups(user):
+    """ Returns all groups for the given user """
+    return []
