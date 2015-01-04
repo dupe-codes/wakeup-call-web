@@ -56,6 +56,7 @@ def verify_cookie(user_cookie):
     Verifies that the given cookie is valid by checking with the backend
 
     Returns True if the cookie is a valid session, False otherwise
-    TODO: Implement this on the backend
     """
-    return True
+    cookie = {'wakeup-session': user_cookie}
+    response = requests.get(settings.BACKEND_URL + '/users/sessioncheck', cookies=cookie)
+    return True if response.status_code == 200 else False
