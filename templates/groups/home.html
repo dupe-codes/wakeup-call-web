@@ -14,23 +14,21 @@
     {% endwith %}
   </div>
 
-  <div class="container user-info">
-    <h1> {{ user.userName }} </h1>
-    {% if user.Phonenumber != "" %}
-      <h3> Phone number: {{ user.Phonenumber }} </h3>
-    {% else %}
-      <h3> Phone number: None recorded </h3>
-    {% endif %}
+  <div class="container group-info">
+    <h1>{{ group.groupName }}</h1>
+    <p><a href="/groups/{{group.groupName}}/edit">Edit group</a></p>
   </div>
-  <div class="container user-groups-list">
-    <h1> {{ user.userName }}'s groups: <h1>
+
+  <div class="container group-users-list">
+    <h1>Members:</h1>
     <ul style="list-style: none;">
-      {% for group in groups %}
+      {% for user in users %}
         <li>
-          <h3><a href="/groups/{{group.groupName}}">{{ group.groupName }}</a></h3>
-          <!--<p><a href="/groups/{{group.groupName}}/edit">Edit group</a></p>-->
+          <p>User: {{ user.userName }}</p>
+          <p>Phone number: {{ user.Phonenumber }}</p>
         </li>
       {% endfor %}
     </ul>
   </div>
+
 {% endblock %}

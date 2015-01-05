@@ -23,15 +23,18 @@ def login_required(fn):
         return fn(*args, **kwargs)
     return wrap
 
-@app.route('/test')
-@login_required
-def test():
-    return render_template('home.html')
 
+"""
+Home page
+"""
 @app.route('/')
 def home():
     return render_template('home.html')
 
+"""
+User functionality
+TODO: Move in to views/users.py file
+"""
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
@@ -81,6 +84,17 @@ def userPage():
     user = api.get_user_info(request)
     groups = api.get_user_groups(user['userName'], request.cookies) # TODO: Make User model that is built from dict
     return render_template('users/home.html', user=user, groups=groups)
+
+"""
+Groups functionality
+TODO: Move in to views/groups.py file
+"""
+
+@app.route('/groups/<group_name>', methods=['GET'])
+def groupPage(group_name):
+    group = api.get_group_info(group_name)
+    users = api.get_group_users(group_name)
+    return render_template('groups/home.html', group=group, users=users)
 
 if __name__ == '__main__':
     app.run(debug=True)

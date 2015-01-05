@@ -91,3 +91,31 @@ def get_user_groups(username, cookies):
 
     # Shouldn't reach here
     return []
+
+def get_group_info(group_name):
+    """ Fetchs information for the given group """
+    url = '/groups/{group}'.format(group=group_name)
+    response = requests.get(settings.BACKEND_URL + url)
+    if response.status_code != 200: return None
+
+    try:
+        content = response.json()
+        return content['Data']
+    except:
+        return None
+
+    return None
+
+def get_group_users(group_name):
+    """ Fetchs information on all users in the given group """
+    url = '/groups/{group}/users'.format(group=group_name)
+    response = requests.get(settings.BACKEND_URL + url)
+    if response.status_code != 200: return []
+
+    try:
+        content = response.json()
+        return content['Data']
+    except:
+        return []
+
+    return []
