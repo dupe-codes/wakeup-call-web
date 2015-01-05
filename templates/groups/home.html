@@ -17,6 +17,7 @@
   <div class="container group-info">
     <h1>{{ group.groupName }}</h1>
     <p><a href="/groups/{{group.groupName}}/edit">Edit group</a></p>
+    <p>Phone number: {{group.phoneNumber}}</p>
   </div>
 
   <div class="container group-users-list">
@@ -25,7 +26,7 @@
       {% for user in users %}
         <li>
           <p>User: {{ user.userName }}</p>
-          <p>Phone number: {{ user.Phonenumber }}</p>
+          <p>Phone number: {{ user.phoneNumber }}</p>
         </li>
       {% endfor %}
     </ul>

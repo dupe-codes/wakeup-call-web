@@ -21,6 +21,7 @@
             <ul class="nav navbar-nav">
               {% if 'wakeup-session' not in request.cookies %}
                 <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
               {% else %}
                 <li><a href="/users/home">User Home</a></li>
                 <li><a href="/groups">New Group</a></li>
