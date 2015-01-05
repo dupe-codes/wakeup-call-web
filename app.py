@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, flash, session
 from flask import redirect, url_for, make_response
+import twilio.twiml
 
 from functools import wraps
 
 from utils.forms import *
-from utils import api
+from utils import api, outbound_messages
 import settings
 
 app = Flask(__name__)
@@ -103,6 +104,7 @@ def create_group():
         else:
             flash('New group successfully created!')
             group_name = request.form['Name']
+            outbound_messages.send_group_created_notification(group_name)
             url = '/groups/{group}'.format(group=group_name)
             return redirect(url)
 
@@ -111,6 +113,29 @@ def group_page(group_name):
     group = api.get_group_info(group_name)
     users = api.get_group_users(group_name)
     return render_template('groups/home.html', group=group, users=users)
+
+"""
+Texts endpoint
+"""
+@app.route('/texts', methods=['GET', 'POST'])
+def receive_message():
+    """ Receive and parse incoming group messages """
+
+    sender_number = request.values.get('From', None)
+    receiving_number = request.values.get('To', None)
+    message_body = request.values.get('Body', '')
+
+    # TODO: Add security so only group members can send texts to the group
+    sending_user = api.get_user_from_number(sender_number)
+    receiving_group = api.get_group_from_number(receiving_number)
+
+    # Just send response for now, but later send to all group members + don't
+    # reply to original sender
+    forwarded_message = ': '.join([sending_user['firstName'], message_body])
+    resp = twilio.twiml.Response()
+    resp.message(forwarded_message)
+
+    return str(resp)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -92,6 +92,10 @@ def get_user_groups(username, cookies):
     # Shouldn't reach here
     return []
 
+def get_user_from_number(phone_number):
+    """ Queries the API for a user with the given phone number """
+    return {'firstName': 'Nick'}
+
 """
 Groups API Interactions
 TODO: Decompose this + user api interactions above
@@ -138,3 +142,8 @@ def get_group_users(group_name):
         return []
 
     return []
+
+def get_group_from_number(phone_number):
+    """ Queries the API for a group matching the given phone number """
+    return {}
+

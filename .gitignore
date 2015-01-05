@@ -7,3 +7,5 @@ static/lib
 *.log
 
 .DS_Store
+
+utils/secrets.py
