@@ -63,7 +63,7 @@ def login():
             return render_template('forms/login.html', form=form)
         else:
             flash('Successfully logged in!')
-            response = make_response(redirect(url_for('test')))
+            response = make_response(redirect(url_for('userPage')))
             response.headers['Set-Cookie'] = outcome['cookie']
             return response
 
@@ -78,9 +78,9 @@ def logout():
 @app.route('/users/home', methods=['GET'])
 @login_required
 def userPage():
-    user_info = api.get_user_info(request)
-    groups = api.get_user_groups(user_info)
-    return render_template('users/home.html', user=user_info, groups=groups)
+    user = api.get_user_info(request)
+    groups = api.get_user_groups(user['userName'], request.cookies) # TODO: Make User model that is built from dict
+    return render_template('users/home.html', user=user, groups=groups)
 
 if __name__ == '__main__':
     app.run(debug=True)

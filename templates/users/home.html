@@ -1,5 +1,36 @@
 {% extends 'layouts/main.html' %}
 
 {% block content %}
-  <h1> User {{ user.name }} homepage </h1>
+  <div class="container messages-wrapper">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-warning fda in">
+            <a class="close" data-dismiss="alert">&times;</a>
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="container user-info">
+    <h1> User: {{ user.userName }} </h1>
+    {% if user.Phonenumber != "" %}
+      <h3> Phone number: {{ user.Phonenumber }} </h3>
+    {% else %}
+      <h3> Phone number: None recorded </h3>
+    {% endif %}
+  </div>
+  <div class="container user-groups-list">
+    <h1> {{ user.userName }}'s groups: <h1>
+    <ul style="list-style: none;">
+      {% for group in groups %}
+        <li>
+          <h3><a href="/groups/{{group.groupName}}">{{ group.groupName }}</a></h3>
+          <!--<p><a href="/groups/{{group.groupName}}/edit">Edit group</a></p>-->
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}
