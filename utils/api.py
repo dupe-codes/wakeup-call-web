@@ -92,6 +92,25 @@ def get_user_groups(username, cookies):
     # Shouldn't reach here
     return []
 
+"""
+Groups API Interactions
+TODO: Decompose this + user api interactions above
+"""
+
+def create_group(params, cookies):
+    """ Creates a group from the given form parameters """
+    response = requests.post(settings.BACKEND_URL + '/groups', params=params, cookies=cookies)
+    try:
+        content = response.json()
+        if response.status_code != 200:
+            return False, content['Error']
+    except:
+        error = {'Message': 'Internal Server Error'}
+        return False, error
+
+    # If we reach here, group creation was successful
+    return True, None
+
 def get_group_info(group_name):
     """ Fetchs information for the given group """
     url = '/groups/{group}'.format(group=group_name)

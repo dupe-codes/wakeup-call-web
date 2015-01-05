@@ -5,6 +5,7 @@
 
     <!-- CSS Files -->
     <link type="text/css" rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     {% block header_content %}{% endblock %}
   </head>
@@ -22,6 +23,7 @@
                 <li><a href="/login">Login</a></li>
               {% else %}
                 <li><a href="/users/home">User Home</a></li>
+                <li><a href="/groups">New Group</a></li>
                 <li><a href="/logout">Logout</a></li>
               {% endif %}
             </ul>

@@ -27,3 +27,8 @@ class RegisterForm(Form):
 class LoginForm(Form):
     Username = TextField('Username', [DataRequired()])
     Password = PasswordField('Password', [DataRequired()])
+
+class GroupForm(Form):
+    Name = TextField(
+        'Name', validators=[DataRequired()]
+    )

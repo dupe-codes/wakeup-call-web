@@ -23,7 +23,6 @@ def login_required(fn):
         return fn(*args, **kwargs)
     return wrap
 
-
 """
 Home page
 """
@@ -49,8 +48,7 @@ def register():
             return render_template('forms/register.html', form=form)
         else:
             flash('Successfully registered, you may now login!')
-            form = LoginForm(request.form)
-            return render_template('forms/login.html', form=form)
+            return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -66,7 +64,7 @@ def login():
             return render_template('forms/login.html', form=form)
         else:
             flash('Successfully logged in!')
-            response = make_response(redirect(url_for('userPage')))
+            response = make_response(redirect(url_for('user_page')))
             response.headers['Set-Cookie'] = outcome['cookie']
             return response
 
@@ -80,7 +78,7 @@ def logout():
 
 @app.route('/users/home', methods=['GET'])
 @login_required
-def userPage():
+def user_page():
     user = api.get_user_info(request)
     groups = api.get_user_groups(user['userName'], request.cookies) # TODO: Make User model that is built from dict
     return render_template('users/home.html', user=user, groups=groups)
@@ -90,8 +88,26 @@ Groups functionality
 TODO: Move in to views/groups.py file
 """
 
+@app.route('/groups', methods=['GET', 'POST'])
+@login_required
+def create_group():
+    if request.method == 'GET':
+        form = GroupForm(request.form)
+        return render_template('forms/group.html', form=form)
+    else:
+        success, error = api.create_group(request.form, request.cookies)
+        if not success:
+            flash(error['Message'])
+            form = GroupForm(request.form)
+            return render_template('forms/group.html', form=form)
+        else:
+            flash('New group successfully created!')
+            group_name = request.form['Name']
+            url = '/groups/{group}'.format(group=group_name)
+            return redirect(url)
+
 @app.route('/groups/<group_name>', methods=['GET'])
-def groupPage(group_name):
+def group_page(group_name):
     group = api.get_group_info(group_name)
     users = api.get_group_users(group_name)
     return render_template('groups/home.html', group=group, users=users)
