@@ -1,8 +1,11 @@
-from os import path
+import os
 
-basedir = path.abspath(path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Enable debug mode. Turn off in production.
-DEBUG = True
+if os.environ.get('MODE') == 'DEV':
+    # Enable debug mode. Turn off in production.
+    DEBUG = True
+else:
+    DEBUG = False
 
-SECRET_KEY = 'some super secret'
+SECRET_KEY = 'something super secret'
