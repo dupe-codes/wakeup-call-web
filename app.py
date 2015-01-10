@@ -142,4 +142,8 @@ def receive_message():
     return str(resp)
 
 if __name__ == '__main__':
-    app.run(debug=settings.DEBUG)
+    print 'App starting on port: {port}\nDebug mode: {debug}'.format(
+        port=settings.PORT,
+        debug=settings.DEBUG,
+    )
+    app.run(debug=settings.DEBUG, port=settings.PORT)

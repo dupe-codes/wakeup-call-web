@@ -2,10 +2,11 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-if os.environ.get('MODE') == 'DEV':
-    # Enable debug mode. Turn off in production.
-    DEBUG = True
-else:
+if os.environ.get('MODE') == 'PROD':
     DEBUG = False
+    PORT = os.environ.get('PORT')
+else:
+    DEBUG = True
+    PORT = 5000
 
 SECRET_KEY = 'something super secret'
