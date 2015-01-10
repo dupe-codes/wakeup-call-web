@@ -3,14 +3,20 @@ Functions for sending text messages from the server
 to group members
 """
 
-from twilio.rest import TwilioRestClient
+import os
 import requests
+from twilio.rest import TwilioRestClient
 
 import api
 import settings
-import secrets # TODO: Configure this to get API auth stuff from env variables
 
-client = TwilioRestClient(secrets.TWILIO_SID, secrets.TWILIO_AUTH_TOKEN)
+try:
+    from secrets import *
+except ImportError:
+    TWILIO_SID = os.environ.get('TWILIO_SID')
+    TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+
+client = TwilioRestClient(TWILIO_SID, TWILIO_AUTH_TOKEN)
 
 def send_group_created_notification(group_name):
     """ Sends a text confirmation that group has been created """
