@@ -1,3 +1,7 @@
+"""
+Runs the main wakeup call web server
+"""
+
 from flask import Flask, render_template, request, flash, session
 from flask import redirect, url_for, make_response
 import twilio.twiml
