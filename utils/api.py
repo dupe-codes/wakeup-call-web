@@ -94,6 +94,7 @@ def get_user_groups(username, cookies):
 
 def get_user_from_number(phone_number):
     """ Queries the API for a user with the given phone number """
+    print 'Requesting user with phone number: {}'.format(phone_number)
     url = '/users'
     params = {'phoneNumber': phone_number}
     response = requests.get(settings.BACKEND_URL + url, params=params)
