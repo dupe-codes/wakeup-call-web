@@ -159,3 +159,6 @@ def get_group_from_number(phone_number):
     """ Queries the API for a group matching the given phone number """
     return {}
 
+def create_group_invitation(form_data, cookies, group):
+    """ Creates an invitation for the given group in the backend """
+    return True, None, None

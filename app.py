@@ -118,6 +118,24 @@ def group_page(group_name):
     users = api.get_group_users(group_name)
     return render_template('groups/home.html', group=group, users=users)
 
+@app.route('/groups/<group_name>/invite', methods=['GET', 'POST'])
+def invite_page(group_name):
+    group = api.get_group_info(group_name)
+    if request.method == 'GET':
+        form = InviteForm(request.form)
+        return render_template('groups/invite.html', group=group, form=form)
+    else:
+        success, error, invite_code = api.create_group_invitation(request.form, request.cookies, group)
+        if not success:
+            flash(error['Message'])
+            form = InviteForm(request.form)
+            return render_template('groups/invite.html', group=group, form=form)
+        else:
+            outbound_messages.send_invite_message(request.form, group, invite_code)
+            flash('Invite successfully sent!')
+            url = '/groups/{group}'.format(group=group_name)
+            return redirect(url)
+
 """
 Texts endpoint
 """

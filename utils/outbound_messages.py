@@ -34,3 +34,7 @@ def send_group_created_notification(group_name):
             to=user_number,
             body=message,
         )
+
+def send_invite_message(user_data, group, invite_code):
+    """ Sends a text message invite to a new user to join the given group """
+    return

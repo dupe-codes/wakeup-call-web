@@ -1,0 +1,17 @@
+{% extends 'layouts/form.html' %}
+
+{% block title %}Invite{% endblock %}
+
+{% block content %}
+  <form action="/groups/{{group.groupName}}/invite" method="post" class="form">
+    <h3 class="form-heading">
+      Invite your friends to join {{group.groupName}}
+      <a href="{{ url_for('home') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a>
+    </h3>
+    {{ form.Name(class_='form-control first-input', placeholder=form.Name.label.text, required=true, autofocus=true) }}
+    <br/>
+    {{ form.Phonenumber(class_='form-control last-input', placeholder=form.Phonenumber.label.text, required=true) }}
+    <br/>
+    <input type="submit" value="Invite" class="btn btn-primary btn-lg btn-block">
+  </form>
+{% endblock %}
