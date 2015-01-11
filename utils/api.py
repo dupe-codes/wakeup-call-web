@@ -94,7 +94,18 @@ def get_user_groups(username, cookies):
 
 def get_user_from_number(phone_number):
     """ Queries the API for a user with the given phone number """
-    return {'firstName': 'Nick'}
+    url = '/users'
+    params = {'phoneNumber': phone_number}
+    response = requests.get(settings.BACKEND_URL + url, params=params)
+    if response.status_code != 200: return None
+
+    try:
+        content = response.json()
+        return content['Data']
+    except:
+        return None
+
+    return None
 
 """
 Groups API Interactions
