@@ -125,13 +125,13 @@ def invite_page(group_name):
         form = InviteForm(request.form)
         return render_template('groups/invite.html', group=group, form=form)
     else:
-        success, error, invite_code = api.create_group_invitation(request.form, request.cookies, group)
+        success, error = api.create_group_invitation(request.form, request.cookies, group)
         if not success:
             flash(error['Message'])
             form = InviteForm(request.form)
             return render_template('groups/invite.html', group=group, form=form)
         else:
-            outbound_messages.send_invite_message(request.form, group, invite_code)
+            outbound_messages.send_invite_message(request.form, group)
             flash('Invite successfully sent!')
             url = '/groups/{group}'.format(group=group_name)
             return redirect(url)

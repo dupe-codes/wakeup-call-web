@@ -5,6 +5,7 @@ with the wakeup call backend
 
 import requests
 import settings
+import outbound_messages
 
 def registerNewUser(params):
     """
@@ -160,5 +161,20 @@ def get_group_from_number(phone_number):
     return {}
 
 def create_group_invitation(form_data, cookies, group):
-    """ Creates an invitation for the given group in the backend """
-    return True, None, None
+    """
+    Creates an invitation for the given group in the backend 
+
+    Returns a tuple of (success, error)
+    """
+    url = '/groups/{groupName}/invite'.format(groupName=group['groupName'])
+    response = requests.post(settings.BACKEND_URL + url, params=form_data, cookies=cookies)
+    if response.status_code == 200: return True, None
+
+    try:
+        content = response.json()
+        return False, content['Error']
+    except:
+        return False, {'Message': 'Internal server error'}
+
+    # Shouldn't reach here
+    return False, None

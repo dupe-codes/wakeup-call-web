@@ -35,6 +35,17 @@ def send_group_created_notification(group_name):
             body=message,
         )
 
-def send_invite_message(user_data, group, invite_code):
+def send_invite_message(user_data, group):
     """ Sends a text message invite to a new user to join the given group """
-    return
+
+    message = "Hi {name}, you've been invited to join the group {groupname}! Please visit {link} to accept the invitation".format(
+        name=user_data['Name'],
+        groupname=group['groupName'],
+        link='http://www.wakeup-web.herokuapp.com/invite'
+    )
+
+    client.messages.create(
+        from_=group['phoneNumber'],
+        to=user_data['Phonenumber'],
+        body=message,
+    )
